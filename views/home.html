@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <steve> return steve.include('head.html', { title: 'Home' }); </steve>
+
+    <!-- page's styling and scripting -->
+    <style>
+        /* check for mobile/tablet devices */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column !important;
+
+                p {
+                    font-size: 18pt !important;
+                }
+            }
+
+            .blog-posts {
+                h1 {
+                    text-align: center !important;
+                    font-size: 16pt;
+                }
+            }
+
+            .post-preview {
+                flex-direction: column !important;
+            }
+
+            .post-list {
+                text-align: center !important;
+            }
+
+            .other-posts {
+                flex-direction: row !important;
+                text-align: center !important;
+            }
+
+            #hero-image {
+                width: 50% !important;
+            }
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            margin-top: auto;
+            padding-top: 20px;
+            padding-bottom: 20px;
+
+            p {
+                font-size: 24pt;
+                margin: 0;
+            }
+        }
+
+        #hero-image {
+            width: 25%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            filter: drop-shadow(7px 7px 10px rgba(0, 0, 0, 0.5));
+
+            transition: transform 0.3s ease;
+        }
+
+        #hero-image.flipped {
+            transform: rotateY(180deg) scaleX(-1);
+        }
+
+        .blog-posts {
+            display: flex;
+            flex-direction: column;
+            margin-top: auto;
+            background-color: #22272c;
+            padding: 20px;
+            margin-bottom: 50px;
+            box-shadow: 10px 10px 10px 3px rgba(0, 0, 0, 0.5);
+
+            h1 {
+                margin: 0;
+                text-align: start;
+            }
+
+            hr {
+                width: 100%;
+                border: #597387 1px solid;
+            }
+        }
+
+        .post-preview {
+            display: flex;
+            flex-direction: row;
+            gap: 25px;
+        }
+
+        .post-body {
+            flex: 2 1 0;
+            
+            h2, h3 {
+                font-weight: normal;
+            }
+        }
+
+        .post-list {
+            flex: 1 1 0;
+            display: flex;
+            flex-direction: column;
+            text-align: end;
+            gap: 25px;
+        }
+
+        .other-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .post {
+            display: none;
+        }
+
+        .post.active {
+            display: block;
+        }
+
+        .post-link {
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 10pt;
+        }
+
+        .post-link.active {
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+    </style>
+
+    <script>
+        // toggle article when link is clicked on
+        const togglePost = (id) => {
+            document.querySelectorAll('.post').forEach(element => element.classList.remove('active'));
+            document.querySelectorAll('.post-link').forEach(element => element.classList.remove('active'));
+
+            document.querySelector(`#post-${id}`).classList.add('active');
+            document.querySelector(`#post-link-${id}`).classList.add('active');
+        };
+
+        window.addEventListener('load', () => {
+            // when clicking on the hero image, show easter egg
+            const heroImage = document.querySelector('#hero-image');
+            heroImage.addEventListener('click', () => {
+                heroImage.classList.toggle('flipped');
+
+                setTimeout(() => {
+                    if (heroImage.classList.contains('flipped')) heroImage.src = '/static/img/logo.png';
+                    else heroImage.src = '/static/img/hero-image.png';
+                }, 100);
+            });
+
+            // toggle first post when loaded
+            togglePost(0);
+        });
+    </script>
+</head>
+
+<body>
+    <div id="circle-container"></div>
+    
+    <div class="container">
+        <steve> return steve.include('navbar.html'); </steve>
+
+        <div class="hero">
+            <img src="/static/img/hero-image.png" id="hero-image">
+
+            <div>
+                <p class="glowing">Hello! My name is Alex.</p>
+                <p class="glowing">I'm a software developer.</p>
+                <p class="glowing">Check out what I've done.</p>
+            </div>
+        </div>
+
+        <div class="blog-posts">
+            <h1 class="glowing">Recent Posts</h1>
+
+            <hr />
+
+            <div class="post-preview">
+                <div class="post-body">
+                    <steve>
+                        let content = '';
+                        const currentPosts = steve.data.posts.slice(0, 3);
+                        for (let i = 0; i < currentPosts.length; i++) {
+                            content += steve.include('home_post.html', { id: i, name: currentPosts[i].name, ...currentPosts[i].data });
+                        }
+                        return content;
+                    </steve>
+                </div>
+                <div class="post-list">
+                    <div class="other-posts">
+                        <steve>
+                            let content = '';
+                            const currentPosts = steve.data.posts.slice(0, 3);
+                            for (let i = 0; i < currentPosts.length; i++) {
+                                content += `<a class="post-link glowing-link" id="post-link-${i}" onclick="togglePost(${i})">${ currentPosts[i].data.title }</a>`;
+                            }
+                            return content;
+                        </steve>
+                    </div>
+                    <a href="/blog" class="glowing-link">More Posts</a>
+                </div>
+            </div>
+        </div>
+
+        <steve> return steve.include('footer.html'); </steve>
+    </div>
+</body>
+
+</html>

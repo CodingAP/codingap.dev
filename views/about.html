@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <steve> return steve.include('head.html', { title: 'About' }); </steve>
+
+    <!-- page's styling and scripting -->
+    <style>
+        .contact {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <steve> return steve.include('navbar.html'); </steve>
+
+        <div id="circle-container"></div>
+
+        <div class="contact">
+            <h2>For professional conversations, contact me through my email.</h2>
+            <h4>
+                <img class="icon" src="/static/icons/envelope.svg"> <a class="glowing-link" href="mailto:alex.prosser.uark@gmail.com">alex.prosser.uark@gmail.com</a>
+            </h4>
+            <h2>The best way to contact me is through Discord.</h2>
+            <h4>
+                <img class="icon" src="/static/icons/discord.svg"> <a class="glowing-link" href="https://discord.com">ExcellentAP (formally AP#1519)</a>
+            </h4>
+            <h2>Here is my other social media:</h2>
+            <h4>
+                YouTube <img class="icon" src="/static/icons/youtube.svg">: <a class="glowing-link" href="https://youtube.com/CodingAP">CodingAP</a>
+            </h4>
+            <h4>
+                LinkedIn <img class="icon" src="/static/icons/linkedin.svg">: <a class="glowing-link"
+                    href="https://www.linkedin.com/in/alex-prosser-a8524a221/">Alex Prosser</a>
+            </h4>
+            <h4>
+                Github <img class="icon" src="/static/icons/github.svg">: <a class="glowing-link" href="https://github.com/CodingAP">CodingAP</a>
+            </h4>
+        </div>
+
+        <steve> return steve.include('footer.html'); </steve>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <steve> return steve.include('head.html', { title: 'Blog' }); </steve>
+
+    <!-- page's styling and scripting -->
+    <style>
+        /* check for mobile/tablet devices */
+        @media (max-width: 768px) {
+            .post {
+                h2 {
+                    text-align: center;
+                }
+            }
+            
+            .search {
+                p {
+                    font-size: 24px;
+                }
+            }
+        }
+
+        .container {
+            display: block !important;
+        }
+
+        .post {
+            display: flex;
+            flex-direction: column;
+            margin-top: auto;
+            background-color: #22272c;
+            padding: 20px;
+            margin-bottom: 50px;
+            box-shadow: 10px 10px 10px 3px rgba(0, 0, 0, 0.5);
+            visibility: visible;
+            transform: scaleY(1);
+            transform-origin: top;
+            transition: all 0.3s ease;
+
+            h1 {
+                margin: 0;
+                text-align: start;
+            }
+
+            hr {
+                width: 100%;
+                border: #597387 1px solid;
+            }
+        }
+
+        .post.hidden {
+            visibility: hidden;
+            transform: scaleY(0);
+            height: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .search {
+            padding: 50px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            p {
+                font-size: 36px;
+            }
+        }
+
+        #post-name-search {
+            background: transparent;
+            border: 3px solid #22272c;
+            border-radius: 25px;
+            padding-left: 30px;
+            padding-right: 30px;
+            width: 80%;
+            color: #597387;
+            font-family: cascadia;
+            font-size: 14pt;
+        }
+    </style>
+
+    <script>
+        let lastSearch = '';
+        let debounce = null;
+
+        const searchForPosts = (search) => {
+            if (search === lastSearch) return null;
+            lastSearch = search;
+
+            let found = 0;
+            const allPosts = document.querySelectorAll('.post');
+            for (let i = 0; i < allPosts.length; i++) {
+                allPosts[i].classList.add('hidden');
+                if (allPosts[i].querySelector('h2 > a').innerHTML.trim().toLowerCase().includes(search.toLowerCase())) {
+                    allPosts[i].classList.remove('hidden');
+                    found++;
+                }
+            }
+
+            return (found === 0) ? "Sorry, couldn't find any posts :(" : '';
+        };
+
+        window.addEventListener('load', () => {
+            const searchInput = document.querySelector('#post-name-search');
+            const searchCheckSpan = document.querySelector('#search-check');
+
+            searchInput.addEventListener('keyup', () => {
+                const response = searchForPosts(searchInput.value);
+                if (response !== null) searchCheckSpan.innerHTML = response;
+
+                if (debounce === null) {
+                    debounce = setTimeout(() => {
+                        window.dispatchEvent(new Event('resize'));
+                        debounce = null;
+                    }, 300);
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="circle-container"></div>
+    
+    <div class="container">
+        <steve> return steve.include('navbar.html'); </steve>
+
+        <div class="search">
+            <p class="glowing">Search for Posts</p>
+            <span id="search-check"></span>
+            <input id="post-name-search" type="text" placeholder="Name of Post...">
+        </div>
+
+        <div class="blog-posts">
+            <steve>
+                let content = '';
+                for (let i = 0; i < steve.data.posts.length; i++) {
+                    content += steve.include('blog_post.html', { name: steve.data.posts[i].name, ...steve.data.posts[i].data });
+                }
+                return content;
+            </steve>
+        </div>
+
+        <steve> return steve.include('footer.html'); </steve>
+    </div>
+</body>
+
+</html>

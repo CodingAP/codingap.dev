@@ -1,0 +1,211 @@
+@font-face {
+    font-family: cascadia;
+    src: url('/static/font/cascadia.ttf');
+}
+
+/* check for mobile/tablet devices */
+@media (max-width: 768px) {
+    .container {
+        width: 95% !important;
+    }
+
+    .navbar #menu {
+        display: none !important;
+    }
+
+    #hamburger {
+        display: flex !important;
+    }
+
+    .footer {
+        flex-direction: column !important;
+
+        .text-start {
+            text-align: center !important;
+        }
+    
+        .text-end {
+            a {
+                text-align: center !important;
+            }
+        }
+    }
+}
+
+/* need some space for the circles, only show on bigger screens */
+@media (max-width: 950px) {
+    .circle {
+        display: none;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background-color: #22272c;
+    color: #8c9ea3;
+    background: radial-gradient(#2a4158, #22272c);
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: hidden;
+    font-family: cascadia;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    margin: 0;
+    min-height: 100vh;
+}
+
+.container {
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* background circles */
+#circle-container {
+    z-index: -1;
+    width: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.circle {
+    position: absolute;
+    aspect-ratio: 1;
+    border-radius: 50%;
+}
+
+/* navbar css */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: 0px 8px 3px -3px #597387;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    .logo {
+        img {
+            vertical-align: middle;
+            display: inline-block !important;
+        }
+
+        text-decoration: none;
+        font-size: 1.5rem;
+    }
+
+    #menu {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            margin: 0 0.5rem;
+        }
+    }
+}
+
+#hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+
+    span {
+        background-color: #597387;
+        height: 3px;
+        width: 25px;
+        margin: 3px 0;
+    }
+}
+
+#mobile-menu {
+    width: 80%;
+    position: absolute;
+    left: 0; 
+    right: 0;
+    margin-top: 10px;
+    margin-inline: auto;
+    padding: 0.25em;
+    background-color: #22272c;
+    border: #597387 1px solid;
+    box-shadow: 0px 0px 3px 3px #597387;
+    border-radius: 10px;
+    list-style: none;
+    z-index: 1;
+
+    transform: scaleY(0); 
+    transform-origin: top;
+    transition: transform 0.15s;
+
+    li {
+        margin: 0.5rem 0;
+        float: right;
+        clear: both;
+    }
+}
+
+#mobile-menu.open {
+    z-index: 1;
+    transform: scaleY(1);
+}
+
+/* footer css */
+.footer {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding: 0.5rem 1rem;
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: 0px -8px 3px -3px #597387;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .text-start {
+        text-align: start;
+    }
+
+    .text-end {
+        a {
+            text-align: end;
+        }
+    }
+}
+
+/* general css classes */
+.glowing,
+.glowing-link {
+    text-decoration: none;
+    color: #597387;
+    text-shadow: 0 0 5px #597387;
+}
+
+.glowing-link:hover {
+    color: #7fa8ca;
+    cursor: pointer;
+}
+
+.icon {
+    vertical-align: middle;
+    display: inline-block !important;
+}

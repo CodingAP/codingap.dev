@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <steve> return steve.include('head.html', { title: 'Projects' }); </steve>
+
+    <!-- page's styling and scripting -->
+    <style>
+        .projects {
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <steve> return steve.include('navbar.html'); </steve>
+
+        <div id="circle-container"></div>
+
+        <div class="projects">
+            <h1 class="glowing">Work In Progress!</h1>
+        </div>
+
+        <steve> return steve.include('footer.html'); </steve>
+    </div>
+</body>
+
+</html>

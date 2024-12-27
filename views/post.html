@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <steve> return steve.include('head.html', { title: steve.data.title }); </steve>
+
+    <!-- page's styling and scripting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+        h1, h2, h3, h4, h5, h6, a {
+            text-decoration: none;
+            color: #597387;
+            text-shadow: 0 0 5px #597387;
+            text-align: center;
+        }
+
+        a:hover {
+            color: #7fa8ca;
+            cursor: pointer;
+        }
+
+        pre {
+            background: #282a36 !important;
+            box-shadow: 10px 10px 10px 3px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            overflow-x: scroll;
+        }
+
+        .header {
+            margin-top: 30px;
+        }
+
+        article {
+            line-height: 18pt;
+            margin-bottom: 30px;
+        }
+
+        .blog-image {
+            width: 100%;
+        }
+
+        .blog-image-50 {
+            width: 50%;
+        }
+
+        .blog-image-75 {
+            width: 75%;
+        }
+
+        /* highlight.js dracula theme */
+        .hljs {
+            display: block !important;
+            overflow-x: auto !important;
+            padding: 0.5em !important;
+            background: #282a36 !important;
+        }
+
+        .hljs-built_in,
+        .hljs-selector-tag,
+        .hljs-section,
+        .hljs-link {
+            color: #8be9fd !important;
+        }
+
+        .hljs-keyword {
+            color: #ff79c6 !important;
+        }
+
+        .hljs,
+        .hljs-subst {
+            color: #f8f8f2 !important;
+        }
+
+        .hljs-title,
+        .hljs-attr,
+        .hljs-meta-keyword {
+            font-style: italic !important;
+            color: #50fa7b !important;
+        }
+
+        .hljs-string,
+        .hljs-meta,
+        .hljs-name,
+        .hljs-type,
+        .hljs-symbol,
+        .hljs-bullet,
+        .hljs-addition,
+        .hljs-variable,
+        .hljs-template-tag,
+        .hljs-template-variable {
+            color: #f1fa8c !important;
+        }
+
+        .hljs-comment,
+        .hljs-quote,
+        .hljs-deletion {
+            color: #6272a4 !important;
+        }
+
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-literal,
+        .hljs-title,
+        .hljs-section,
+        .hljs-doctag,
+        .hljs-type,
+        .hljs-name,
+        .hljs-strong {
+            font-weight: bold !important;
+        }
+
+        .hljs-literal,
+        .hljs-number {
+            color: #bd93f9 !important;
+        }
+
+        .hljs-emphasis {
+            font-style: italic !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <steve> return steve.include('navbar.html'); </steve>
+
+        <div id="circle-container"></div>
+
+        <div class="header">
+            <h1><steve> return steve.data.title; </steve></h1>
+            <h3>by <steve> return steve.data.author; </steve> | <steve> return steve.data.date; </steve></h3>
+        </div>
+
+        <article class="pb-4">
+            <steve> return steve.data.content; </steve>
+        </article>
+
+        <steve> return steve.include('footer.html'); </steve>
+    </div>
+</body>
+
+</html>

@@ -1,14 +1,17 @@
 {
     "tasks": {
-        "dev": "deno run --allow-read --allow-net server.ts"
+        "run": "deno run -A --env-file --unstable-ffi server.ts"
     },
     "imports": {
         "@b-fuze/deno-dom": "jsr:@b-fuze/deno-dom@^0.1.48",
         "@codingap/steve": "jsr:@codingap/steve@^2.0.10",
+        "@db/sqlite": "jsr:@db/sqlite@^0.12.0",
         "@libs/markdown": "jsr:@libs/markdown@^2.0.2",
+        "@std/crypto": "jsr:@std/crypto@^1.0.3",
+        "@std/encoding": "jsr:@std/encoding@^1.0.6",
         "@std/fs": "jsr:@std/fs@^1.0.6",
         "@std/html": "jsr:@std/html@^1.0.3",
-        "@std/media-types": "jsr:@std/media-types@^1.1.0",
+        "@std/http": "jsr:@std/http@^1.0.12",
         "@std/path": "jsr:@std/path@^1.0.8"
     },
     "lint": {

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <steve> return steve.include('head.html', { title: 'CMS Login' }); </steve>
+
+    <!-- page's styling and scripting -->
+    <style>
+        .login {
+            margin: auto 0;
+            text-align: center;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+
+    <script>
+        window.addEventListener('load', () => {
+            const loginError = document.querySelector('#login-error');
+        
+            document.querySelector('#submit').addEventListener('click', () => {
+                const password = document.querySelector('#password').value || '';
+
+                if (password === '') loginError.innerHTML = 'Please enter a password...';
+                else {
+                    fetch('/api/cms/login', {
+                        method: 'POST',
+                        body: JSON.stringify({ password }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) loginError.innerHTML = data.message;
+                            else window.location.href = '/cms/dashboard';
+                        });
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="circle-container"></div>
+
+        <div class="login">
+            <h1 class="glowing">Log In!</h1>
+            <input type="password" placeholder="Password..." id="password" />
+            <button id="submit">Submit</button>
+            <p class="error" id="login-error"></p>
+        </div>
+    </div>
+</body>
+
+</html>

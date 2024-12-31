@@ -6,20 +6,159 @@
 
     <!-- page's styling and scripting -->
     <style>
-        .error {
-            margin-top: auto;
+        .container {
+            width: 1000px !important;
+        }
+
+        .header {
             text-align: center;
         }
+
+        .dashboard {
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+            text-align: center;
+            justify-content: space-around;
+            gap: 50px;
+        }
+
+        .hub {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            align-items: center;
+        }
+
+        button {
+            font-family: cascadia;
+            font-size: 14pt;
+            border: 3px solid #22272c;
+            border-radius: 25px;
+            text-decoration: none;
+            color: #597387;
+            text-shadow: 0 0 5px #597387;
+            background: transparent;
+            padding: 5px 15px;
+
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .blog-post, .project {
+            display: flex;
+            flex-direction: column;
+            background-color: #22272c;
+            padding: 20px;
+            box-shadow: 10px 10px 10px 3px rgba(0, 0, 0, 0.5);
+            text-align: start;
+            margin-bottom: 50px;
+            width: 80%;
+            visibility: visible;
+            transform: scaleY(1);
+            transform-origin: top;
+            transition: all 0.3s ease;
+
+            * {
+                margin: 5px;
+            }
+
+            .tools {
+                text-align: center;
+            }
+        }
+
+        .all-posts, .all-projects {
+            overflow-y: scroll;
+            max-height: 50vh;
+            border: #597387 1px solid;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+
+        .search {
+            background: transparent;
+            border: 3px solid #22272c;
+            border-radius: 25px;
+            padding-left: 30px;
+            padding-right: 30px;
+            width: 80%;
+            color: #597387;
+            font-family: cascadia;
+            font-size: 14pt;
+            margin-bottom: 10px;
+        }
+
+        .w-25 {
+            width: 25%;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
+    <script>
+        window.addEventListener('load', () => {
+            document.querySelector('#logout').addEventListener('click', () => {
+                Cookies.remove('session', { path: '/' });
+                window.location.reload();
+            });
+        });
+    </script>
 </head>
 
 <body>
     <div class="container">
         <div id="circle-container"></div>
 
-        <div class="error">
-            <h1 class="glowing">404 - Not Found!</h1>
-            <p>The URL provided doesn't point to a valid page. Be sure to check it, or yell at me to fix it if there is a problem!</p>
+        <div class="header">
+            <h1 class="glowing"><a class="glowing-link" href="/">CodingAP</a> - CMS Dashboard</h1>
+            <button id="logout" class="w-25">Logout</button>
+        </div>
+
+        <div class="dashboard">
+            <div class="hub">
+                <h2>Blog Hub</h2>
+                <button class="w-100">+ Add New Post</button>
+                <h2>Current Posts</h2>
+                <input class="search" id="search-posts" type="text" placeholder="Name of Post..." />
+                <div class="all-posts">
+                    <div class="blog-post">
+                        <a class="glowing-link"><h3>RazorHack CTF 2024 - Breakroom Adventure Write-up</h3></a>
+                        <h5>by Alex Prosser | 11/2/2024</h5>
+                        <div class="tools">
+                            <a><img class="icon" src="/static/icons/edit.svg"></a>
+                            <a><img class="icon" src="/static/icons/trash.svg"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hub">
+                <h2>Projects Hub</h2>
+                <button class="w-100">+ Add New Project</button>
+                <h2>Current Projects</h2>
+                <input class="search" id="search-projects" type="text" placeholder="Name of Project..." />
+                <div class="all-projects">
+                    <div class="project">
+                        <a class="glowing-link"><h3>Advent of Code Hub</h3></a>
+                        <h5>by Alex Prosser | 11/2/2024</h5>
+                        <div class="tools">
+                            <a><img class="icon" src="/static/icons/edit.svg"></a>
+                            <a><img class="icon" src="/static/icons/trash.svg"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

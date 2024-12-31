@@ -208,4 +208,5 @@ body {
 .icon {
     vertical-align: middle;
     display: inline-block !important;
+    cursor: pointer;
 }

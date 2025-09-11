@@ -103,15 +103,102 @@
         .w-100 {
             width: 100%;
         }
+
+        .error {
+            color: red;
+        }
+
+        #create-post-dialog {
+            border: none;
+            background-color: rgba(0, 0, 0, 0);
+
+            .dialog-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 30vw;
+                height: 30vh;
+                background-color: #22272c;
+                padding: 20px;
+                box-shadow: 10px 10px 10px 3px rgba(0, 0, 0, 0.5);
+                text-align: center;
+                border: none;
+                border-radius: 10px;
+                font-family: cascadia;
+                color: #597387;
+
+                h2 {
+                    text-shadow: 0 0 5px #597387;
+                }
+
+                input {
+                    margin: 10px;
+                    font-family: cascadia;
+                    font-size: 14pt;
+                    background: transparent;
+                    border: 3px solid #597387;
+                    border-radius: 25px;
+                    padding: 5px 15px;
+                    width: 80%;
+                    color: #597387;
+                }
+
+                button {
+                    margin: 10px;
+                    font-family: cascadia;
+                    font-size: 14pt;
+                    border: 3px solid #597387;
+                    border-radius: 25px;
+                    background: transparent;
+                    padding: 10px 20px;
+                    text-shadow: 0 0 5px #597387;
+                    transition: all 0.3s ease;
+                }
+
+                button:hover {
+                    background: rgba(0, 0, 0, 0.5);
+                }
+            }
+        }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
 
     <script>
         window.addEventListener('load', () => {
+            const createPostDialog = document.querySelector('#create-post-dialog');
+
             document.querySelector('#logout').addEventListener('click', () => {
                 Cookies.remove('session', { path: '/' });
                 window.location.reload();
+            });
+
+            document.querySelector('#create-post').addEventListener('click', () => {
+                createPostDialog.showModal();
+            });
+
+            document.querySelector('#submit-create-post').addEventListener('click', () => {
+                const postTitleInput = document.querySelector('#post-title');
+                const postIdInput = document.querySelector('#post-id');
+                const errorText = document.querySelector('#error-create-post');
+
+                fetch('/api/cms/create-post', {
+                    method: 'POST',
+                    body: JSON.stringify({ title: postTitleInput.value, id: postIdInput.value }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) errorText.innerHTML = data.message;
+                        else window.location.href = '/cms/post/' + postIdInput.value;
+                    });
+            });
+
+            document.querySelector('#close-create-post').addEventListener('click', () => {
+                createPostDialog.close();
             });
         });
     </script>
@@ -129,7 +216,7 @@
         <div class="dashboard">
             <div class="hub">
                 <h2>Blog Hub</h2>
-                <button class="w-100">+ Add New Post</button>
+                <button id="create-post" class="w-100">+ Create New Post</button>
                 <h2>Current Posts</h2>
                 <input class="search" id="search-posts" type="text" placeholder="Name of Post..." />
                 <div class="all-posts">
@@ -160,6 +247,21 @@
                 </div>
             </div>
         </div>
+
+        <dialog id="create-post-dialog">
+            <div class="dialog-content">
+                <h2>Create New Post</h2>
+
+                <input id="post-title" type="text" placeholder="Post Title...">
+                <input id="post-id" type="text" placeholder="Post ID...">
+                <p class="error" id="error-create-post"></p>
+                
+                <div>
+                    <button id="submit-create-post" type="submit">Create</button>
+                    <button id="close-create-post" aria-label="close" formnovalidate>Cancel</button>
+                </div>
+            </div>
+        </dialog>
     </div>
 </body>
 

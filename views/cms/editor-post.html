@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <steve> return steve.include('head.html', { title: 'Editor' }); </steve>
+    <steve> return steve.include('head.html', { title: 'Editor', ...steve.data }); </steve>
 
     <!-- page's styling and scripting -->
     <style>
@@ -10,14 +10,85 @@
             margin-top: auto;
             text-align: center;
         }
+
+        input {
+            margin: 10px;
+            font-family: cascadia;
+            font-size: 14pt;
+            background: transparent;
+            border: 3px solid #597387;
+            border-radius: 25px;
+            padding: 5px 15px;
+            width: 80%;
+            color: #597387;
+        }
+
+        .metadata {
+            text-align: center;
+        }
     </style>
+
+    <script src="https://unpkg.com/tiny-markdown-editor/dist/tiny-mde.min.js"></script>
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://unpkg.com/tiny-markdown-editor/dist/tiny-mde.min.css"
+    />
+
+    <script>
+        window.addEventListener('load', () => {
+            const editor = new TinyMDE.Editor({ element: 'markdown-editor' });
+            const commandBar = new TinyMDE.CommandBar({
+                element: 'markdown-command-bar',
+                editor,
+                commands: [
+                    'bold',
+                    'italic',
+                    {
+                        name: 'insertLink',
+                        action: editor => {
+                            const dest = window.prompt('Type link'); 
+                            if (dest) editor.wrapSelection('[', `](<${dest}>)`);
+                        }
+                    },
+                    {
+                        name: 'insertImage',
+                        action: editor => {
+                            editor.wrapSelection('::image{src="', '" style="width: 100%"}')
+                        }
+                    },
+                    {
+                        name: 'center',
+                        innerHTML: 'C',
+                        action: editor => {
+                            editor.wrapSelection(':::center\n"', '"\n:::')
+                        }
+                    }
+                ]
+            });
+
+            editor.setContent('<steve> return steve.data.post.content; </steve>');
+        });
+    </script>
 </head>
 
 <body>
     <div class="container">
+        <steve> return steve.include('navbar.html', { ...steve.data }); </steve>
+
         <div id="circle-container"></div>
 
-        <steve> return JSON.stringify(steve.data.post) + ' ' + steve.data.created;  </steve>
+        <div class="metadata">
+            <h1 class="glowing">Edit Post</h1>
+            <input type="text" placeholder="Post Title..." id="post-title" />
+            <div>
+                Is Public:
+                <input type="checkbox" id="post-visible">
+            </div>
+        </div>
+
+        <div id="markdown-command-bar"></div>
+        <div id="markdown-editor"></div>
     </div>
 </body>
 

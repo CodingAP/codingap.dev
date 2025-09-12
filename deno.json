@@ -3,16 +3,16 @@
         "run": "deno run -A --env-file --unstable-ffi server.ts"
     },
     "imports": {
-        "@b-fuze/deno-dom": "jsr:@b-fuze/deno-dom@^0.1.48",
+        "@b-fuze/deno-dom": "jsr:@b-fuze/deno-dom@^0.1.56",
         "@codingap/steve": "jsr:@codingap/steve@^2.0.10",
         "@db/sqlite": "jsr:@db/sqlite@^0.12.0",
-        "@libs/markdown": "jsr:@libs/markdown@^2.0.2",
-        "@std/crypto": "jsr:@std/crypto@^1.0.3",
-        "@std/encoding": "jsr:@std/encoding@^1.0.6",
-        "@std/fs": "jsr:@std/fs@^1.0.6",
-        "@std/html": "jsr:@std/html@^1.0.3",
-        "@std/http": "jsr:@std/http@^1.0.12",
-        "@std/path": "jsr:@std/path@^1.0.8"
+        "@libs/markdown": "jsr:@libs/markdown@^2.0.4",
+        "@std/crypto": "jsr:@std/crypto@^1.0.5",
+        "@std/encoding": "jsr:@std/encoding@^1.0.10",
+        "@std/fs": "jsr:@std/fs@^1.0.19",
+        "@std/html": "jsr:@std/html@^1.0.4",
+        "@std/http": "jsr:@std/http@^1.0.20",
+        "@std/path": "jsr:@std/path@^1.1.2"
     },
     "lint": {
         "exclude": ["**/*.js"]

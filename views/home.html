@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <steve> return steve.include('head.html', { title: 'Home' }); </steve>
+    <steve> return steve.include('head.html', { title: 'Home', ...steve.data }); </steve>
 
     <!-- page's styling and scripting -->
     <style>
@@ -172,7 +172,7 @@
     <div id="circle-container"></div>
     
     <div class="container">
-        <steve> return steve.include('navbar.html'); </steve>
+        <steve> return steve.include('navbar.html', { ...steve.data }); </steve>
 
         <div class="hero">
             <img src="/static/img/hero-image.png" id="hero-image">

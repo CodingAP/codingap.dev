@@ -10,18 +10,18 @@ defaultHeaders.append('Content-Type', 'text/html');
 const ROUTES: Route[] = [
     {
         pattern: new URLPattern({ pathname: '/' }),
-        handler: () => new Response(STEVE.renderFile('./views/home.html', { posts }), { status: 200, headers: defaultHeaders })
+        handler: async (request) => new Response(STEVE.renderFile('./views/home.html', { authenticated: await authenticated(request), posts }), { status: 200, headers: defaultHeaders })
     },
     {
         pattern: new URLPattern({ pathname: '/blog' }),
-        handler: () => new Response(STEVE.renderFile('./views/blog.html', { posts }), { status: 200, headers: defaultHeaders })
+        handler: async (request) => new Response(STEVE.renderFile('./views/blog.html', { authenticated: await authenticated(request), posts }), { status: 200, headers: defaultHeaders })
     },
     {
         pattern: new URLPattern({ pathname: '/blog/:title' }),
-        handler: (_request, params) => {
+        handler: async (request, params) => {
             const post = posts.find(post => post.name === params?.pathname.groups.title);
             if (post !== undefined) {
-                return new Response(STEVE.renderFile('./views/post.html', { ...post.data }), { status: 200, headers: defaultHeaders });
+                return new Response(STEVE.renderFile('./views/post.html', { authenticated: await authenticated(request), ...post.data }), { status: 200, headers: defaultHeaders });
             } else {
                 return getNotFoundResponse();
             }
@@ -29,11 +29,11 @@ const ROUTES: Route[] = [
     },
     {
         pattern: new URLPattern({ pathname: '/about' }),
-        handler: () => new Response(STEVE.renderFile('./views/about.html', { posts }), { status: 200, headers: defaultHeaders })
+        handler: async (request) => new Response(STEVE.renderFile('./views/about.html', { authenticated: await authenticated(request), posts }), { status: 200, headers: defaultHeaders })
     },
     {
         pattern: new URLPattern({ pathname: '/projects' }),
-        handler: () => new Response(STEVE.renderFile('./views/projects.html', { posts }), { status: 200, headers: defaultHeaders })
+        handler: async (request) => new Response(STEVE.renderFile('./views/projects.html', { authenticated: await authenticated(request), posts }), { status: 200, headers: defaultHeaders })
     },
     {
         pattern: new URLPattern({ pathname: '/cms' }),
@@ -46,7 +46,7 @@ const ROUTES: Route[] = [
                     },
                 });  
             } else {
-                return new Response(STEVE.renderFile('./views/cms/login.html', {}), { status: 200, headers: defaultHeaders }); 
+                return new Response(STEVE.renderFile('./views/cms/login.html', { authenticated: await authenticated(request) }), { status: 200, headers: defaultHeaders }); 
             }
         }
     },
@@ -54,7 +54,7 @@ const ROUTES: Route[] = [
         pattern: new URLPattern({ pathname: '/cms/dashboard' }),
         handler: async (request) => {
             if (await authenticated(request)) {
-                return new Response(STEVE.renderFile('./views/cms/dashboard.html', {}), { status: 200, headers: defaultHeaders });   
+                return new Response(STEVE.renderFile('./views/cms/dashboard.html', { authenticated: await authenticated(request) }), { status: 200, headers: defaultHeaders });   
             } else {
                 return new Response('', {
                     status: 307,
@@ -73,7 +73,7 @@ const ROUTES: Route[] = [
                 if (urlID !== undefined) {
                     const post = getPostFromUrlID(urlID);
                     if (post !== undefined) {
-                        return new Response(STEVE.renderFile('./views/cms/editor-post.html', { post }), { status: 200, headers: defaultHeaders }); 
+                        return new Response(STEVE.renderFile('./views/cms/editor-post.html', { authenticated: await authenticated(request), post }), { status: 200, headers: defaultHeaders }); 
                     }
                 }
                 return getNotFoundResponse();

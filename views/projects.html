@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <steve> return steve.include('head.html', { title: 'Projects' }); </steve>
+    <steve> return steve.include('head.html', { title: 'Projects', ...steve.data }); </steve>
 
     <!-- page's styling and scripting -->
     <style>
@@ -15,7 +15,7 @@
 
 <body>
     <div class="container">
-        <steve> return steve.include('navbar.html'); </steve>
+        <steve> return steve.include('navbar.html', { ...steve.data }); </steve>
 
         <div id="circle-container"></div>
 

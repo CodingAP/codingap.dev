@@ -80,7 +80,7 @@ interface Post {
     /**
      * raw data for post (still has markdown/custom tags)
      */
-    post: string;
+    content: string;
 
     /**
      * is post visible to the public
@@ -104,7 +104,7 @@ const mapPostFromDB = (data: Record<string, string> | undefined): Post | undefin
         author: data['AUTHOR'],
         created: new Date(data['CREATED']),
         updated: new Date(data['UPDATED']),
-        post: data['POST'],
+        content: data['POST'],
         visible: data['VISIBLE'] === '1'
     };
 }

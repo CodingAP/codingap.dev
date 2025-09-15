@@ -1,8 +1,17 @@
+/**
+ * src/routes.ts
+ *
+ * handles all the routing for paths that have a view
+ *
+ * by alex prosser
+ * 9/15/2025
+ */
+
 import { STEVE } from '@codingap/steve';
 import { type Route } from "@std/http/unstable-route";
 import posts from './posts.ts';
 import { authenticated, getNotFoundResponse } from "./middleware.ts";
-import { getPostFromUrlID } from "./database.ts";
+import { getPostFromUrlID } from "./database/database.ts";
 
 const defaultHeaders = new Headers();
 defaultHeaders.append('Content-Type', 'text/html');

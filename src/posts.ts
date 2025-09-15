@@ -1,3 +1,14 @@
+/**
+ * src/posts.ts
+ *
+ * this is a temporary solution to the blog as i construct the cms
+ * 
+ * this was how i stored and accessed the posts, rendered with steve and lib/markdown 
+ *
+ * by alex prosser
+ * 9/15/2025
+ */
+
 import { DOMParser } from '@b-fuze/deno-dom';
 import { STEVE } from '@codingap/steve';
 import { Renderer } from '@libs/markdown';

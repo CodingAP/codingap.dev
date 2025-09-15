@@ -1,10 +1,24 @@
-import { type Route } from '@std/http/unstable-route';
-import { setCookie } from '@std/http/cookie';
+/**
+ * src/api.ts
+ *
+ * handles all the routing for paths that start with /api
+ * 
+ * mostly used for requests that don't need a view
+ *
+ * by alex prosser
+ * 9/15/2025
+ */
+
 import { crypto } from '@std/crypto';
 import { encodeHex } from '@std/encoding/hex';
+import { setCookie } from '@std/http/cookie';
+import { type Route } from '@std/http/unstable-route';
+import { createPost, getPostFromUrlID } from "./database/database.ts";
+import { getLogger } from './logger.ts';
 import { authenticated, encrypt } from './middleware.ts';
 import { CreatePostRequestBody, LoginRequestBody } from './types.ts';
-import { createPost, getPostFromUrlID } from "./database.ts";
+
+const logger = getLogger();
 
 const defaultHeaders = new Headers();
 defaultHeaders.append('Content-Type', 'application/json');
@@ -30,13 +44,16 @@ const ROUTES: Route[] = [
                     const headers = new Headers();
                     headers.append('Content-Type', 'application/json');
                     setCookie(headers, { name: 'session', value: cookie, path: '/', sameSite: 'Lax' });
-    
+
+                    logger.info('GET /api/cms/login - Successful log-in!');
                     return new Response(JSON.stringify({ message: 'Success!', error: false }), { status: 200, headers });
                 } else {
+                    logger.warn('GET /api/cms/login - Unsuccessful log-in!');      
                     return new Response(JSON.stringify({ message: 'Incorrect password!', error: true }), { status: 400, headers: defaultHeaders });
                 }
             }
-    
+
+            logger.warn('GET /api/cms/login - Unsuccessful log-in!');
             return new Response(JSON.stringify({ message: 'Failed to login!', error: true }), { status: 400, headers: defaultHeaders });
         }
     },
@@ -66,6 +83,7 @@ const ROUTES: Route[] = [
                 createPost(body.title, body.id);
             
                 // respond with the post id if successful
+                logger.info(`POST /api/cms/create-post - Created a post with the id "${body.id}"!`);
                 return new Response(JSON.stringify({ message: 'Successful!', error: false }), { status: 200, headers: defaultHeaders });
             }
     

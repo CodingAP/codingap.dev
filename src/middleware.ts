@@ -1,3 +1,12 @@
+/**
+ * src/middleware.ts
+ *
+ * the functions sit in the middle of routers to handle stuff, like encryption and auth
+ *
+ * by alex prosser
+ * 9/15/2025
+ */
+
 import { STEVE } from '@codingap/steve';
 import { decodeHex, encodeHex } from '@std/encoding/hex';
 import { getCookies } from '@std/http/cookie';
@@ -16,9 +25,7 @@ const AUTH_KEY = await crypto.subtle.importKey('raw', new TextEncoder().encode(D
 const getNotFoundResponse = () => {
     return new Response(STEVE.renderFile('./views/notfound.html', {}), {
         status: 404,
-        headers: {
-            'Content-Type': 'text/html'
-        }
+        headers: { 'Content-Type': 'text/html' }
     });
 };
 
@@ -70,3 +77,4 @@ export {
     authenticated,
     encrypt, getNotFoundResponse
 };
+

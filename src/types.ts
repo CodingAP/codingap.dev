@@ -1,4 +1,13 @@
 /**
+ * src/types.ts
+ *
+ * has all the types and interfaces used by the application, as well as mappings
+ *
+ * by alex prosser
+ * 9/15/2025
+ */
+
+/**
  * the body for a login request
  */
 interface LoginRequestBody {

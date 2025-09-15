@@ -61,7 +61,7 @@ const getPostFromUrlID = (id: string): Post | undefined => {
     const getPostStatement = database.prepare(`SELECT * FROM POSTS WHERE URL_ID = ?`);
 
     return mapPostFromDB(getPostStatement.get(id));
-}
+};
 
 export {
     getDatabase,
